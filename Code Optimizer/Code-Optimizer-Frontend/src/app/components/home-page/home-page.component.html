@@ -1,0 +1,198 @@
+<div class="home-container">
+  <!-- Header -->
+  <header class="header">
+    <nav class="nav container">
+      <div class="logo">
+        <i class="fas fa-code logo-icon"></i>
+        <span>CodeOptimizer</span>
+      </div>
+      <div class="user-info">
+        <span>Welcome, Developer</span>
+        <div class="user-avatar">
+          {{ getUserInitials() }}
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container">
+      <!-- Hero Section -->
+      <section class="hero">
+        <h1>Smart Code Optimization Platform</h1>
+        <p>Automatically analyze, refactor, and optimize your code for better performance, readability, and maintainability with our AI-powered optimization engine.</p>
+        <div class="hero-stats">
+          <div class="stat">
+            <span class="stat-number">{{ stats.optimizedCode }}</span>
+            <span class="stat-label">Files Optimized</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number">{{ stats.performanceImprovement }}%</span>
+            <span class="stat-label">Avg. Performance Gain</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number">{{ stats.activeUsers }}</span>
+            <span class="stat-label">Active Developers</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Action Cards -->
+      <section class="actions-section">
+        <div class="actions-container">
+          <div class="action-card optimize-card" [class.loading]="isOptimizing">
+            <div class="card-icon">
+              <i class="fas fa-bolt"></i>
+            </div>
+            <h3>Optimize Your Code</h3>
+            <p>Click the button below to analyze and optimize your current codebase. Our AI will suggest improvements for performance, security, and best practices.</p>
+            <button 
+              class="btn btn-primary" 
+              (click)="optimizeCode()"
+              [disabled]="isOptimizing"
+            >
+              <i class="fas" [class.fa-magic]="!isOptimizing" [class.fa-spinner]="isOptimizing" [class.fa-spin]="isOptimizing"></i>
+              {{ isOptimizing ? 'Optimizing...' : 'Optimize Code' }}
+            </button>
+            
+            <!-- Recent Optimization History -->
+            <div class="recent-history" *ngIf="recentOptimizations.length > 0">
+              <h4>Recent Optimizations</h4>
+              <div class="history-list">
+                <div class="history-item" *ngFor="let item of recentOptimizations">
+                  <i class="fas fa-file-code"></i>
+                  <span class="file-name">{{ item.fileName }}</span>
+                  <span class="time-ago">{{ item.timeAgo }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="action-card account-card">
+            <div class="card-icon">
+              <i class="fas fa-user-cog"></i>
+            </div>
+            <h3>Account & Settings</h3>
+            <p>Manage your account settings, view optimization history, and configure your preferences for the optimization engine.</p>
+            
+            <div class="account-actions">
+              <button class="btn btn-secondary" (click)="viewHistory()">
+                <i class="fas fa-history"></i> View History
+              </button>
+              <button class="btn btn-secondary" (click)="openSettings()">
+                <i class="fas fa-cog"></i> Settings
+              </button>
+              <button class="btn btn-logout" (click)="logout()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quick Actions -->
+      <section class="quick-actions">
+        <h2>Quick Actions</h2>
+        <div class="quick-actions-grid">
+          <div class="quick-action" (click)="uploadFile()">
+            <i class="fas fa-upload"></i>
+            <span>Upload File</span>
+          </div>
+          <div class="quick-action" (click)="scanProject()">
+            <i class="fas fa-folder-open"></i>
+            <span>Scan Project</span>
+          </div>
+          <div class="quick-action" (click)="viewReports()">
+            <i class="fas fa-chart-bar"></i>
+            <span>View Reports</span>
+          </div>
+          <div class="quick-action" (click)="openDocumentation()">
+            <i class="fas fa-book"></i>
+            <span>Documentation</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Features Section -->
+      <section class="features">
+        <h2>Why Choose CodeOptimizer?</h2>
+        <div class="features-grid">
+          <div class="feature">
+            <div class="feature-icon">
+              <i class="fas fa-rocket"></i>
+            </div>
+            <h4>Performance Boost</h4>
+            <p>Improve execution speed and reduce memory usage with smart algorithmic optimizations.</p>
+          </div>
+          <div class="feature">
+            <div class="feature-icon">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <h4>Security Analysis</h4>
+            <p>Identify and fix potential security vulnerabilities in your code automatically.</p>
+          </div>
+          <div class="feature">
+            <div class="feature-icon">
+              <i class="fas fa-file-code"></i>
+            </div>
+            <h4>Code Quality</h4>
+            <p>Enhance code readability and maintainability with best practice recommendations.</p>
+          </div>
+          <div class="feature">
+            <div class="feature-icon">
+              <i class="fas fa-chart-line"></i>
+            </div>
+            <h4>Detailed Reports</h4>
+            <p>Get comprehensive analysis reports with actionable insights and improvement metrics.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <div class="footer-logo">CodeOptimizer</div>
+          <p class="footer-tagline">Making better code, automatically.</p>
+        </div>
+        <div class="footer-links">
+          <a href="#" class="footer-link">Documentation</a>
+          <a href="#" class="footer-link">API Reference</a>
+          <a href="#" class="footer-link">Pricing</a>
+          <a href="#" class="footer-link">Support</a>
+        </div>
+        <div class="social-links">
+          <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="copyright">© {{ currentYear }} CodeOptimizer. All rights reserved.</span>
+        <div class="legal-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Notification -->
+  <div class="toast" [class.show]="showToast" [class.success]="toastType === 'success'" [class.warning]="toastType === 'warning'">
+    <div class="toast-icon">
+      <i class="fas" [class.fa-check-circle]="toastType === 'success'" [class.fa-exclamation-triangle]="toastType === 'warning'"></i>
+    </div>
+    <div class="toast-content">
+      <div class="toast-title">{{ toastTitle }}</div>
+      <div class="toast-message">{{ toastMessage }}</div>
+    </div>
+    <button class="toast-close" (click)="hideToast()">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+</div>

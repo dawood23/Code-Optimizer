@@ -1,0 +1,88 @@
+@use './../login/login.component.scss' as *;
+
+.password-strength {
+  margin-top: 0.75rem;
+}
+
+.strength-bar {
+  height: 4px;
+  background: var(--border-color);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.strength-fill {
+  height: 100%;
+  transition: all 0.3s ease;
+  border-radius: 2px;
+  
+  &.weak {
+    width: 33%;
+    background: var(--error-color);
+  }
+  
+  &.medium {
+    width: 66%;
+    background: #ffa500;
+  }
+  
+  &.strong {
+    width: 100%;
+    background: var(--success-color);
+  }
+}
+
+.strength-text {
+  font-size: 0.8rem;
+  font-weight: 500;
+  
+  &.weak {
+    color: var(--error-color);
+  }
+  
+  &.medium {
+    color: #ffa500;
+  }
+  
+  &.strong {
+    color: var(--success-color);
+  }
+}
+
+.success-alert {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  background-color: rgba(46, 213, 115, 0.1);
+  border: 1px solid rgba(46, 213, 115, 0.3);
+  border-radius: 0.5rem;
+  color: var(--success-color);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  animation: slideDown 0.3s ease-out;
+  
+  svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+  }
+}
+
+// Adjust spacing for signup form (has more fields)
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+// Update title and subtitle for signup context
+.app-title {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.app-subtitle {
+  color: var(--text-secondary);
+}

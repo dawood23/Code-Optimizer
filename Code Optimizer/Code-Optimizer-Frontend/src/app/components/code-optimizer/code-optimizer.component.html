@@ -1,0 +1,170 @@
+<div class="code-optimizer-container">
+  <header class="header">
+    <div class="header-content">
+      <h1>
+        <span class="icon">⚡</span>
+        Code Optimizer
+      </h1>
+      <p class="subtitle">AI-Powered Code Analysis & Optimization</p>
+    </div>
+  </header>
+
+  <div class="main-content">
+    
+    <div class="language-selector">
+      <label for="language">Select Language:</label>
+      <select 
+        id="language"
+        [value]="selectedLanguage()"
+        (change)="onLanguageChange($any($event.target).value)"
+        class="language-dropdown">
+        @for (lang of languages(); track lang.value) {
+          <option [value]="lang.value">
+            {{ lang.icon }} {{ lang.label }}
+          </option>
+        }
+      </select>
+    </div>
+
+    <div class="code-grid">
+
+      <div class="code-section">
+        <div class="section-header">
+          <h2>📝 Input Code</h2>
+
+          <div class="button-group">
+            <button 
+              class="btn btn-secondary"
+              (click)="loadExampleCode()"
+              [disabled]="isLoading()">
+              Load Example
+            </button>
+
+            <button 
+              class="btn btn-secondary"
+              (click)="clearAll()"
+              [disabled]="isLoading()">
+              Clear
+            </button>
+          </div>
+        </div>
+
+        <ngx-monaco-editor
+          class="editor-box"
+          [options]="{
+            theme: 'vs',
+            language: selectedLanguage(),
+            automaticLayout: true
+          }"
+          [(ngModel)]="inputCode">
+        </ngx-monaco-editor>
+      </div>
+
+      <div class="code-section">
+        <div class="section-header">
+          <h2>✨ Optimized Code</h2>
+
+          @if (hasOutput()) {
+            <button 
+              class="btn btn-secondary"
+              (click)="copyToClipboard(outputCode())">
+              📋 Copy
+            </button>
+          }
+        </div>
+
+        <ngx-monaco-editor
+          class="editor-box"
+          [options]="{
+            theme: 'vs',
+            language: selectedLanguage(),
+            readOnly: true,
+            automaticLayout: true
+          }"
+          [(ngModel)]="outputCode">
+        </ngx-monaco-editor>
+      </div>
+
+    </div> 
+
+     @if (outputCode()) {
+      <div class="diff-section">
+        <h2>🔍 Code Differences</h2>
+
+        <ngx-monaco-diff-editor
+          class="diff-box"
+          [options]="{
+            theme: 'vs',
+            renderSideBySide: true,
+            automaticLayout: true
+          }"
+          [originalModel]="{
+            code: inputCode(),
+            language: selectedLanguage()
+          }"
+          [modifiedModel]="{
+            code: outputCode(),
+            language: selectedLanguage()
+          }">
+        </ngx-monaco-diff-editor>
+      </div>
+    }
+
+    <div class="action-section" style="margin-top: 12px;">
+      <button 
+        class="btn btn-primary btn-large"
+        (click)="optimizeCode()"
+        [disabled]="!canOptimize()">
+        
+        @if (isLoading()) {
+          <span><span class="spinner"></span> Analyzing...</span>
+        } @else {
+          <span>⚡ Optimize Code</span>
+        }
+      </button>
+    </div>
+
+    @if (error()) {
+      <div class="alert alert-error">
+        <span class="alert-icon">❌</span>
+        {{ error() }}
+      </div>
+    }
+
+
+    @if (hasResults()) {
+      <div class="results-section">
+
+        @if (errorsFound().length > 0) {
+          <div class="result-card error-card">
+            <h3>🔍 Issues Found</h3>
+            <ul>
+              @for (error of errorsFound(); track $index) {
+                <li>{{ error }}</li>
+              }
+            </ul>
+          </div>
+        }
+
+        @if (optimizationsApplied().length > 0) {
+          <div class="result-card success-card">
+            <h3>✅ Optimizations Applied</h3>
+            <ul>
+              @for (opt of optimizationsApplied(); track $index) {
+                <li>{{ opt }}</li>
+              }
+            </ul>
+          </div>
+        }
+
+        @if (description()) {
+          <div class="result-card description-card">
+            <h3>📄 Summary</h3>
+            <p>{{ description() }}</p>
+          </div>
+        }
+      </div>
+    }
+
+  </div> 
+</div>
