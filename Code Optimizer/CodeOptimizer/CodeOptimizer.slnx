@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="CodeOptimizer.Domain/CodeOptimizer.Domain.csproj" />
+  <Project Path="CodeOptimizer.Infrastructure/CodeOptimizer.Infrastructure.csproj" />
+  <Project Path="CodeOptimizer/CodeOptimizer.API.csproj" />
+  <Project Path="docker-compose.dcproj">
+    <Build />
+  </Project>
+</Solution>
